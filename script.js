@@ -95,102 +95,120 @@ $(document).ready(function() {
     var ans;
 
     var choice = $(".choice");
+    var startBtn = $("#startBtn");
     var p1Points = 0;
     var p2Points = 0;
 
 
-    $("#p1Score").text(p1Points);
-    $("#p2Score").text(p2Points);
 
+    //Click listener for the start button
+    //Initialize the game
+    startBtn.click(function(){
+      //Inc to turn 1
+      turns = 1;
 
+      //pick a random question
+      var pick = Math.floor((Math.random() * quiz.length));
 
+      // display the question
+      $("#qno").text("Q." + (turns));
+      $(".question").text(quiz[pick].question);
+      $("img").attr("src", quiz[pick].image);
+
+      //Removes the used question from the Array
+      var quizPick = quiz.splice(pick, 1)[0];
+
+      //Get the actual ans from question object
+      ans = quizPick.answer;
+
+      //display the options
+      // Adds choices from the selected question into an array
+
+      //Add choices to the dom
+      choiceRandomizer(quizPick);
+      $(".startBtn").css({height: "0",
+                          width: "0", "font-size": "0",
+                          transition: "width 0.6s ease, height 0.6s ease, font-size 0.4s ease"});
+    });
 
     choice.click(function() {
 
-      var j = 10;
+      //Get choice player picked
       var playerpick = $(this).text();
 
+      //right choice gets true, wrong gets false
+      function scoring() {
+
+        if (turns % 2 === 1 && playerpick === ans) {
+          p1Points++;
+          $("#p1Score").text(p1Points);
+
+        } else if (turns % 2 === 0 && playerpick === ans) {
+          p2Points++;
+          $("#p2Score").text(p2Points);
+        }
+      }
+      scoring();
+
+      if (turns === 10) {
+        if (p1Points < p2Points){
+          alert("Player 2 is the Bigger Geek!");
+        } else if (p1Points < p2Points) {
+          alert("Player 1 is the Bigger Geek!");
+        }else if (p1Points === p2Points) {
+          alert("Draw Game!!! You are Both Big Geeks! Enjoy the Show!");
+        }
+        location.reload();
+      }
+
+      //player 1's turn 1,3,5 ..
+      //player2's turn 2,4,6,8..
       turns++;
 
-      console.log($(this).text());
-      console.log(ans);
-
-
       //Changes Question number on click
-      //Randomly picks out a question from a shrinking list.
       //Add Image if there is one
 
-      var pick = Math.floor((Math.random() * j--));
+      //TODO: Check shrinking list logic not working
+      var pick = Math.floor((Math.random() * quiz.length));
+      //Removes the used question from the Array
+      var quizPick = quiz.splice(pick, 1)[0];
 
+      //Get the actual ans from question object
+      if (turns > 10) {
+        ans = " ";
+      } else { ans = quizPick.answer;}
+
+      //Display question ans image from turn 1 to 10
       if (turns <= 10) {
-        $("#qno").text("Q." + (turns + 1));
-        $(".question").text(quiz[pick].question);
-        $("img").attr("src", quiz[pick].image);
+        $("#qno").text("Q." + (turns));
+        $(".question").text(quizPick.question);
+        $("img").attr("src", quizPick.image);
       } else {
         $("#qno").text("");
         $(".question").text("");
         $("img").attr("src", "");
       }
 
+      //Add choices to the dom
+      choiceRandomizer(quizPick);
 
-      // Adds choices from the selected question into an array
+    }); //end of choice button listener
+    function choiceRandomizer(chosenQn) {
       var ranChoice = [
-        [quiz[pick].choices[0]],
-        [quiz[pick].choices[1]],
-        [quiz[pick].choices[2]],
-        [quiz[pick].choices[3]]
+        [chosenQn.choices[0]],
+        [chosenQn.choices[1]],
+        [chosenQn.choices[2]],
+        [chosenQn.choices[3]]
       ];
 
-      function choiceRandomizer() {
-        //add random choice into c4 div and removes selected choice
-        // var a = Math.floor((Math.random() * 4));
-        // $("#c4").text(ranChoice[a]);
-        // var c4Choice = ranChoice.splice(a, 1);
-        //
-        // //add random choice into c3 div and removes selected choice
-        // var b = Math.floor((Math.random() * 3));
-        // $("#c3").text(ranChoice[b]);
-        // var c3Choice = ranChoice.splice(b, 1);
-        //
-        // //add random choice into c2 div and removes selected choice
-        // var c = Math.floor((Math.random() * 2));
-        // $("#c2").text(ranChoice[c]);
-        // var c2Choice = ranChoice.splice(c, 1);
-        //
-        // //add final choice into c1 div
-        // $("#c1").text(ranChoice[0]);
-        for (var i = 4; i >= 0;  i--) {
-          var k = Math.floor((Math.random() * i));
-          $("#c" + [i]).text(ranChoice[k]);
-          var l = ranChoice.splice(k, 1);
-        }
+      //add random choice into choice div and removes selected choice
+      for (var i = 4; i >= 0;  i--) {
+        var k = Math.floor((Math.random() * i));
+        $("#c" + [i]).text(ranChoice[k]);
+        var l = ranChoice.splice(k, 1);
       }
-      choiceRandomizer();
+    }
 
-console.log(playerpick === ans);
-
-      //Removes the used question from the Array
-      var quizPick = quiz.splice(pick, 1);
-      ans = quizPick[0].answer;
-      return ans;
-
-
-
-  //right choice gets true, wrong gets false
-      function scoring() {
-        if (turns % 2 === 1 && playerpick === ans) {
-          p1Points++;
-          return p1Points;
-        } else if (turns % 2 === 0 && playerpick === ans) {
-          p2Points++;
-          return p2Points;
-        }
-      }
-      scoring();
-
-console.log(playerpick === ans);
-
-    });
   }
 quizstart();
 });
