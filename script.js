@@ -12,7 +12,7 @@ $(document).ready(function() {
         "Star Trek",
       ],
       "answer": "Star Trek",
-      "image": ""
+      "image": "img/llap.jpg"
     }, {
       "question": "Who owns the TARDIS?",
       "choices": ["Doctor Manhattan",
@@ -21,7 +21,7 @@ $(document).ready(function() {
         "Doctor Who"
       ],
       "answer": "Doctor Who",
-      "image": ""
+      "image": "img/bluebox.jpg"
     }, {
       "question": "Who is this?",
       "choices": ["Eric Cartman",
@@ -35,7 +35,7 @@ $(document).ready(function() {
       "question": "How many books are there in the Harry Potter series?",
       "choices": ["9", "6", "8", "7"],
       "answer": "7",
-      "image": ""
+      "image": "img/HP.jpg"
     }, {
       "question": "Where is this guy from?",
       "choices": ["Killer Klowns from Outer Space",
@@ -49,7 +49,7 @@ $(document).ready(function() {
       "question": "What is this man’s most famous quote?",
       "choices": ["Sit. Stay.",
         "I know Kung Fu!",
-        "I can see my house from here.",
+        "Check yourself, before you wreck yourself.",
         "You are already dead."
       ],
       "answer": "You are already dead.",
@@ -62,7 +62,7 @@ $(document).ready(function() {
         "Warhammer 40K"
       ],
       "answer": "Warhammer 40K",
-      "image": ""
+      "image": "img/tyranids.jpeg"
     }, {
       "question": "What is the Konami Code?",
       "choices": ["Up, Down, Left, Right, B, A, B, Start",
@@ -71,7 +71,7 @@ $(document).ready(function() {
         "Up, Up, Down, Down, Left, Right, Left, Right B, A"
       ],
       "answer": "Up, Up, Down, Down, Left, Right, Left, Right B, A",
-      "image": ""
+      "image": "img/konami.jpg"
     }, {
       "question": "What is Cthulhu also known as?",
       "choices": ["The King in Yellow",
@@ -80,7 +80,7 @@ $(document).ready(function() {
         "The Great Dreamer"
       ],
       "answer": "The Great Dreamer",
-      "image": ""
+      "image": "img/cthulhu.jpg"
     }, {
       "question": "What is the Answer to the Ultimate Question in Life?",
       "choices": ["You only live as long as you want",
@@ -89,7 +89,7 @@ $(document).ready(function() {
         "42"
       ],
       "answer": "42",
-      "image": ""
+      "image": "img/ultimate.jpg"
     }];
     var turns = 0;
     var ans;
@@ -103,7 +103,7 @@ $(document).ready(function() {
 
     //Click listener for the start button
     //Initialize the game
-    startBtn.click(function(){
+    startBtn.click(function() {
       //Inc to turn 1
       turns = 1;
 
@@ -127,14 +127,14 @@ $(document).ready(function() {
       //Add choices to the dom
       choiceRandomizer(quizPick);
       $(".startBtn").css({
-                          height: "0",
-                          width: "0",
-                          "font-size": "0",
-                          opacity: "0",
-                          transition: "opacity 0.6s ease, font-size 0.1s linear 0.6s, width 0.1s linear 0.6s, height 0.1s linear 0.6s"
-                        });
+        height: "0",
+        width: "0",
+        "font-size": "0",
+        opacity: "0",
+        transition: "opacity 0.6s ease, font-size 0.1s linear 0.6s, width 0.1s linear 0.6s, height 0.1s linear 0.6s"
+      });
 
-/*h1 original size is 65px .transition from larger size to that on click start*/
+      /*h1 original size is 65px .transition from larger size to that on click start*/
       $("h1").css({
         "font-size": "65px",
         transition: "font-size 0.6s ease"
@@ -143,6 +143,37 @@ $(document).ready(function() {
       $("img, .image").css({
         "height": "250px",
         transition: "height 0.6s ease"
+      });
+
+      $(".choice").css({
+        "min-height": "75px",
+        width:"95%",
+        height: "45%",
+        "font-size": "30px",
+        opacity: "1",
+        transition: "opacity 0.6s ease"
+      });
+
+      $(".p1, .p2").css({
+        "font-size": "2em",
+        transition: "font-size 0.6s ease"
+      });
+
+      $(".score").css({
+        width: "30px",
+        height: "30px",
+        opacity: "1",
+        transition: "opacity 0.6s ease 1s, width 0.6s ease 1s, height 0.6s ease 1s"
+      });
+
+      $(".qno").css({
+        opacity: "1",
+        transition: "opacity 0.6s ease"
+      });
+
+      $(".question").css({
+        opacity: "1",
+        transition: "opacity 0.6s ease"
       });
 
     });
@@ -176,11 +207,11 @@ $(document).ready(function() {
           transition: "opacity 0.6s ease"
         });
 
-        if (p1Points < p2Points){
+        if (p1Points < p2Points) {
           $(".result").text("Player 2 is the Bigger Geek!");
         } else if (p1Points > p2Points) {
           $(".result").text("Player 1 is the Bigger Geek!");
-        }else if (p1Points === p2Points) {
+        } else if (p1Points === p2Points) {
           $(".result").text("Draw Game!!! You are Both Big Geeks! Enjoy the Show!");
         }
         $(".result").click(function() {
@@ -203,7 +234,9 @@ $(document).ready(function() {
       //Get the actual ans from question object
       if (turns > 10) {
         ans = " ";
-      } else { ans = quizPick.answer;}
+      } else {
+        ans = quizPick.answer;
+      }
 
       //Display question ans image from turn 1 to 10
       if (turns <= 10) {
@@ -229,7 +262,7 @@ $(document).ready(function() {
       ];
 
       //add random choice into choice div and removes selected choice
-      for (var i = 4; i >= 0;  i--) {
+      for (var i = 4; i >= 0; i--) {
         var k = Math.floor((Math.random() * i));
         $("#c" + [i]).text(ranChoice[k]);
         var l = ranChoice.splice(k, 1);
@@ -237,5 +270,5 @@ $(document).ready(function() {
     }
 
   }
-quizstart();
+  quizstart();
 });

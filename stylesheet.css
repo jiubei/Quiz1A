@@ -38,11 +38,13 @@ h1 {
   font-size: 35px;
   padding: 0 0 0 5%;
   margin-top: -35px;
+  opacity: 0;
 }
 
 .question {
   font-size: 40px;
   padding: 0 5% 3% 20%;
+  opacity: 0;
 }
 
 img, .image {
@@ -59,14 +61,16 @@ img, .image {
 }
 
 .choice {
-  min-height: 75px;
-  width:95%;
-  height: 45%;
+  min-height: 0;
+  width: 0;
+  height: 0;
   background-color: #F9F8F8;
   border-radius: 8px;
   margin: 2.5% auto;
-  font-size: 30px;
+  font-size: 0;
   box-shadow: 5px 5px 15px 0 #272838;
+
+  opacity: 0;
 
   display:flex;
   justify-content:center;
@@ -101,22 +105,26 @@ img, .image {
   vertical-align: text-bottom;
   float: left;
   display: inline-flex;
+  font-size: 0;
 }
 
 .p2 {
   vertical-align: text-bottom;
   float: right;
   display: inline-flex;
+  font-size: 0;
 }
 
 .score {
+  margin-top: 3px;
   display:flex;
   justify-content:center;
   align-items:center;
   background-color: white;
-  width: 20px;
-  height: 20px;
+  width: 0;
+  height: 0;
   border-radius: 3px;
   box-shadow: 2px 2px 7px 0 #272838;
   margin-left: 5px;
+  opacity: 0;
 }
