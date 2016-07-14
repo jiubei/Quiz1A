@@ -126,9 +126,25 @@ $(document).ready(function() {
 
       //Add choices to the dom
       choiceRandomizer(quizPick);
-      $(".startBtn").css({height: "0",
-                          width: "0", "font-size": "0",
-                          transition: "width 0.6s ease, height 0.6s ease, font-size 0.4s ease"});
+      $(".startBtn").css({
+                          height: "0",
+                          width: "0",
+                          "font-size": "0",
+                          opacity: "0",
+                          transition: "opacity 0.6s ease, font-size 0.1s linear 0.6s, width 0.1s linear 0.6s, height 0.1s linear 0.6s"
+                        });
+
+/*h1 original size is 65px .transition from larger size to that on click start*/
+      $("h1").css({
+        "font-size": "65px",
+        transition: "font-size 0.6s ease"
+      });
+
+      $("img, .image").css({
+        "height": "250px",
+        transition: "height 0.6s ease"
+      });
+
     });
 
     choice.click(function() {
@@ -151,14 +167,25 @@ $(document).ready(function() {
       scoring();
 
       if (turns === 10) {
+
+        $(".result").css({
+          opacity: "1",
+          width: "97.5%",
+          height: "70%",
+          "font-size": "5em",
+          transition: "opacity 0.6s ease"
+        });
+
         if (p1Points < p2Points){
-          alert("Player 2 is the Bigger Geek!");
-        } else if (p1Points < p2Points) {
-          alert("Player 1 is the Bigger Geek!");
+          $(".result").text("Player 2 is the Bigger Geek!");
+        } else if (p1Points > p2Points) {
+          $(".result").text("Player 1 is the Bigger Geek!");
         }else if (p1Points === p2Points) {
-          alert("Draw Game!!! You are Both Big Geeks! Enjoy the Show!");
+          $(".result").text("Draw Game!!! You are Both Big Geeks! Enjoy the Show!");
         }
-        location.reload();
+        $(".result").click(function() {
+          location.reload();
+        });
       }
 
       //player 1's turn 1,3,5 ..
